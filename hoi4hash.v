@@ -2,7 +2,6 @@ module main
 
 import os
 import crypto.md5
-import ui
 
 const (
 	gamedir = get_gamedir()
@@ -27,7 +26,7 @@ fn get_vanilla_checksum() string {
 	mut digest := md5.new()
 	for entry in parse_manifest() {
 		for file in entry.get_files(false) {
-			digest.write(file.bytes())
+			digest.write(file.replace(gamedir, '').bytes())
 			data := os.read_bytes(file) or {
 				eprintln(err)
 				continue
